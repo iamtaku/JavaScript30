@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Hold Shift to Check Multiple Checkboxes</title>
 </head>
+
 <body>
   <style>
-
     html {
       font-family: sans-serif;
       background: #ffc600;
@@ -17,7 +18,7 @@
       margin: 50px auto;
       background: white;
       border-radius: 5px;
-      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
     }
 
     .item {
@@ -30,7 +31,7 @@
       border-bottom: 0;
     }
 
-    input:checked + p {
+    input:checked+p {
       background: #F9F9F9;
       text-decoration: line-through;
     }
@@ -44,13 +45,13 @@
       padding: 20px;
       transition: background 0.2s;
       flex: 1;
-      font-family:'helvetica neue';
+      font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
       border-left: 1px solid #D1E2FF;
     }
   </style>
-   <!--
+  <!--
    The following is a common layout you would see in an email client.
 
    When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
@@ -93,9 +94,58 @@
       <input type="checkbox">
       <p>Don't forget to tweet your result!</p>
     </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
   </div>
 
-<script>
-</script>
+  <script>
+    const inbox = document.querySelector('.inbox');
+    const checkboxes = Array.from(document.querySelectorAll('.item'));
+    let shift = false;
+    let indexs = [];
+    //when clicked on shift, check checkboxes from first one to the other one
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Shift') {
+        shift = true;
+      }
+    })
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Shift') {
+        shift = false;
+        indexs = [];
+      }
+    })
+
+    inbox.addEventListener('change', (e) => {
+      if (shift) {
+        indexs.push(checkboxes.indexOf(e.target.parentNode));
+        indexs.sort()
+        for (let i = indexs[0]; i <= indexs[indexs.length - 1]; i++) {
+          checkboxes[i].querySelector('input').checked = true;
+        }
+      }
+    })
+  </script>
 </body>
+
 </html>
